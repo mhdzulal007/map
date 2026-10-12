@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A-Block Multi-Floor Navigation System</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+      color: #3c4043;
+    }
+    h2 { margin-top: 0; color: #202124; }
+    
+    .controls {
+      background: #ffffff;
+      padding: 16px 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(60,64,67,0.15), 0 1px 2px rgba(60,64,67,0.3);
+      margin-bottom: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    label { font-size: 14px; font-weight: 500; }
+    select, button {
+      padding: 10px 14px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #dadce0;
+      outline: none;
+    }
+    button {
+      background-color: #1a73e8;
+      color: #ffffff;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover { background-color: #1557b0; }
+
+    .floor-switcher {
+      display: flex;
+      gap: 6px;
+      background: #f1f3f4;
+      padding: 4px;
+      border-radius: 6px;
+    }
+    .floor-btn-ui {
+      padding: 6px 12px;
+      border: none;
+      background: transparent;
+      color: #5f6368;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .floor-btn-ui.active {
+      background: #ffffff;
+      color: #1a73e8;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .app-layout {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .map-viewport {
+      width: 100%;
+      height: 620px;
+      overflow: auto;
+      background-color: #e8eaed;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(60,64,67,0.15);
+      position: relative;
+    }
+    .map-container {
+      position: relative;
+      width: 2400px;
+      height: 600px;
+      transform-origin: 0 0;
+      transition: transform 0.2s ease-out;
+    }
+    #svg-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 2400px; height: 600px;
+      z-index: 1;
+    }
+    #overlay-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 2400px; height: 600px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Floating Action Bar at the Bottom of Map Viewport */
+    .stair-action-bar {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(32, 33, 36, 0.92);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      display: none;
+      align-items: center;
+      gap: 16px;
+      z-index: 10;
+      backdrop-filter: blur(4px);
+    }
+    .stair-action-bar span {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .btn-reached-stair {
+      background-color: #34a853;
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .btn-reached-stair:hover {
+      background-color: #2d8e47;
+    }
+
+    .directions-panel {
+      width: 380px;
+      min-width: 320px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(60,64,67,0.15);
+      padding: 16px 20px;
+      max-height: 620px;
+      overflow-y: auto;
+    }
+    .directions-panel h3 {
+      margin-top: 0;
+      font-size: 16px;
+      color: #1a73e8;
+      border-bottom: 2px solid #e8eaed;
+      padding-bottom: 10px;
+    }
+    .instruction-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f3f4;
+    }
+    .step-icon {
+      width: 28px; height: 28px;
+      background: #e8f0fe;
+      color: #1a73e8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .step-text { font-size: 13px; line-height: 1.4; }
+    .step-dist { color: #70757a; font-size: 11px; margin-top: 2px; }
+  </style>
+</head>
+<body>
+
+  <h2>A-Block Multi-Floor Navigation System</h2>
+
+  <div class="controls">
+    <label for="start-select">Start:</label>
+    <select id="start-select" disabled>
+      <option value="A_G_RECEPT">Reception (Ground Floor)</option>
+    </select>
+
+    <label for="end-select">Destination:</label>
+    <select id="end-select"></select>
+
+    <button onclick="findAndDrawRoute()">Get Directions</button>
+
+    <div class="floor-switcher">
+      <button class="floor-btn-ui active" id="btn-ground" onclick="switchFloor('ground')">Ground</button>
+      <button class="floor-btn-ui" id="btn-first" onclick="switchFloor('first')">1st Floor</button>
+      <button class="floor-btn-ui" id="btn-second" onclick="switchFloor('second')">2nd Floor</button>
+    </div>
+
+    <span style="margin-left: auto;">
+      <button onclick="zoomMap(0.1)">Zoom In (+)</button>
+      <button onclick="zoomMap(-0.1)">Zoom Out (-)</button>
+      <button onclick="resetZoom()" style="background-color: #5f6368;">Fit Screen</button>
+    </span>
+  </div>
+
+  <div class="app-layout">
+    <div class="map-viewport" id="viewport">
+      <div class="map-container" id="map-wrapper">
+        <div id="svg-container"></div>
+        <canvas id="overlay-canvas" width="2400" height="600"></canvas>
+      </div>
+
+      <!-- Bottom Floating Action Bar -->
+      <div class="stair-action-bar" id="stairBar">
+        <span id="stairBarText">Follow the route to the stairs.</span>
+        <button class="btn-reached-stair" onclick="proceedToNextFloor()">Stairs Reached ↗</button>
+      </div>
+    </div>
+
+    <div class="directions-panel">
+      <h3>Turn-by-Turn Route</h3>
+      <div id="instructions-container">
+        <p style="color: #70757a; font-size: 13px;">Select a destination to start navigating from the Reception.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentFloorKey = 'ground';
+    let allNodes = [];
+    let allEdges = [];
+    let activePath = [];
+    let currentScale = 1;
+    let targetNextFloor = null;
+
+    async function initGraphData() {
+      try {
+        const [groundRes, firstRes, secondRes] = await Promise.all([
+          fetch('/api/mapdata/ground'),
+          fetch('/api/mapdata/first'),
+          fetch('/api/mapdata/second')
+        ]);
+
+        const groundData = await groundRes.json();
+        const firstData = await firstRes.json();
+        const secondData = await secondRes.json();
+
+        allNodes = [...(groundData.nodes || []), ...(firstData.nodes || []), ...(secondData.nodes || [])];
+        allEdges = [...(groundData.edges || []), ...(firstData.edges || []), ...(secondData.edges || [])];
+
+        // Vertical Staircase Edges (Ground <-> 1st Floor <-> 2nd Floor)
+        allEdges.push({ "from": "A_G_STAIR_MAIN", "to": "A_1_STAIR_MAIN", "weight": 40 });
+        allEdges.push({ "from": "A_1_STAIR_MAIN", "to": "A_2_STAIR_MAIN", "weight": 40 });
+
+        allEdges.push({ "from": "A_G_STAIR_WEST", "to": "A_1_STAIR_WEST", "weight": 40 });
+        allEdges.push({ "from": "A_1_STAIR_WEST", "to": "A_2_STAIR_WEST", "weight": 40 });
+
+        allEdges.push({ "from": "A_G_STAIR_EAST", "to": "A_1_STAIR_EAST", "weight": 40 });
+        allEdges.push({ "from": "A_1_STAIR_EAST", "to": "A_2_STAIR_EAST", "weight": 40 });
+
+        populateDestinations();
+      } catch (err) {
+        console.error("Error loading JSON graph data:", err);
+      }
+    }
+
+    async function switchFloor(floorKey) {
+      currentFloorKey = floorKey;
+
+      document.querySelectorAll('.floor-btn-ui').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-${floorKey}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const fileMap = {
+        'ground': 'ablock_ground.svg',
+        'first': 'ablock_first.svg',
+        'second': 'ablock_second.svg'
+      };
+      const svgFile = fileMap[floorKey] || 'ablock_ground.svg';
+      
+      try {
+        const response = await fetch(`/static/${svgFile}`);
+        if (!response.ok) throw new Error(`Could not load /static/${svgFile}`);
+        const svgContent = await response.text();
+        document.getElementById('svg-container').innerHTML = svgContent;
+
+        if (activePath.length > 0) {
+          drawRouteOnCurrentFloor();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function populateDestinations() {
+      const endSelect = document.getElementById('end-select');
+      endSelect.innerHTML = '';
+
+      allNodes.forEach(node => {
+        if ((node.type === 'room' || node.type === 'office') && node.id !== 'A_G_RECEPT') {
+          const floorLabel = node.floor === 2 ? '2F' : (node.floor === 1 ? '1F' : 'Ground');
+          endSelect.add(new Option(`${node.label} (${floorLabel})`, node.id));
+        }
+      });
+    }
+
+    function findAndDrawRoute() {
+      const startId = 'A_G_RECEPT';
+      const endId = document.getElementById('end-select').value;
+
+      if (!endId) return;
+
+      activePath = dijkstra(startId, endId);
+
+      // Start on Ground Floor
+      switchFloor('ground');
+
+      generateTurnByTurnInstructions(activePath);
+    }
+
+    function dijkstra(startId, endId) {
+      let distances = {}, prev = {}, nodes = new Set();
+
+      allNodes.forEach(n => {
+        distances[n.id] = Infinity;
+        prev[n.id] = null;
+        nodes.add(n.id);
+      });
+      distances[startId] = 0;
+
+      while (nodes.size > 0) {
+        let smallest = Array.from(nodes).reduce((min, node) => distances[node] < distances[min] ? node : min, Array.from(nodes)[0]);
+        if (smallest === endId) break;
+        nodes.delete(smallest);
+
+        let neighbors = allEdges.filter(e => e.from === smallest || e.to === smallest);
+        neighbors.forEach(edge => {
+          let neighborId = edge.from === smallest ? edge.to : edge.from;
+          if (nodes.has(neighborId)) {
+            let n1 = allNodes.find(n => n.id === smallest);
+            let n2 = allNodes.find(n => n.id === neighborId);
+            let dist = edge.weight || Math.hypot(n1.x - n2.x, n1.y - n2.y);
+            let alt = distances[smallest] + dist;
+
+            if (alt < distances[neighborId]) {
+              distances[neighborId] = alt;
+              prev[neighborId] = smallest;
+            }
+          }
+        });
+      }
+
+      let path = [], curr = endId;
+      while (curr) { path.unshift(curr); curr = prev[curr]; }
+      return path;
+    }
+
+    function drawRouteOnCurrentFloor() {
+      const canvas = document.getElementById('overlay-canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const floorMap = { 'ground': 0, 'first': 1, 'second': 2 };
+      const floorNum = floorMap[currentFloorKey];
+      
+      const pathNodes = activePath.map(id => allNodes.find(n => n.id === id));
+      if (pathNodes.length < 2) return;
+
+      ctx.lineWidth = 8;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      let showStairPrompt = false;
+
+      for (let i = 0; i < pathNodes.length - 1; i++) {
+        const p1 = pathNodes[i];
+        const p2 = pathNodes[i + 1];
+
+        if (p1.floor === floorNum && p2.floor === floorNum) {
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = '#1a73e8';
+          ctx.stroke();
+        }
+        
+        if (p1.floor === floorNum && p2.floor !== floorNum) {
+          showStairPrompt = true;
+          const floorNameMap = { 0: 'ground', 1: 'first', 2: 'second' };
+          targetNextFloor = floorNameMap[p2.floor];
+
+          ctx.beginPath();
+          ctx.arc(p1.x, p1.y, 14, 0, Math.PI * 2);
+          ctx.fillStyle = '#f2994a';
+          ctx.fill();
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+
+          const directionText = p2.floor > p1.floor ? `Take Stairs Up (${p2.floor}F) ↗` : `Take Stairs Down (${p2.floor}F) ↘`;
+          ctx.fillStyle = '#1a73e8';
+          ctx.font = 'bold 13px Arial';
+          ctx.textAlign = 'center';
+          ctx.fillText(directionText, p1.x, p1.y - 22);
+        }
+      }
+
+      const stairBar = document.getElementById('stairBar');
+      if (showStairPrompt) {
+        stairBar.style.display = 'flex';
+      } else {
+        stairBar.style.display = 'none';
+      }
+
+      const firstNode = pathNodes[0];
+      if (firstNode && firstNode.floor === floorNum) {
+        ctx.beginPath();
+        ctx.arc(firstNode.x, firstNode.y, 10, 0, Math.PI * 2);
+        ctx.fillStyle = '#34a853';
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      const lastNode = pathNodes[pathNodes.length - 1];
+      if (lastNode && lastNode.floor === floorNum) {
+        ctx.beginPath();
+        ctx.arc(lastNode.x, lastNode.y, 12, 0, Math.PI * 2);
+        ctx.fillStyle = '#ea4335';
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+    }
+
+    function proceedToNextFloor() {
+      if (targetNextFloor) {
+        switchFloor(targetNextFloor);
+      }
+    }
+
+    function generateTurnByTurnInstructions(pathIds) {
+      const container = document.getElementById('instructions-container');
+      container.innerHTML = '';
+
+      if (pathIds.length < 2) {
+        container.innerHTML = '<p>No valid route found.</p>';
+        return;
+      }
+
+      const pathNodes = pathIds.map(id => allNodes.find(n => n.id === id));
+      let steps = [];
+
+      steps.push({
+        icon: '🚩',
+        text: `Start at <strong>Reception (Ground Floor)</strong>`,
+        sub: `Walk towards main lobby corridor`
+      });
+
+      for (let i = 0; i < pathNodes.length - 1; i++) {
+        let p1 = pathNodes[i];
+        let p2 = pathNodes[i + 1];
+
+        if (p1.floor !== p2.floor) {
+          const floorLabel = p2.floor === 2 ? '2nd Floor' : (p2.floor === 1 ? '1st Floor' : 'Ground Floor');
+          steps.push({
+            icon: '🪜',
+            text: `<strong>Take Stairs</strong> to ${floorLabel}`,
+            sub: `Click "Stairs Reached" button below`
+          });
+        }
+      }
+
+      const lastNode = pathNodes[pathNodes.length - 1];
+      steps.push({
+        icon: '📍',
+        text: `Arrive at <strong>${lastNode.label}</strong>`,
+        sub: `Destination Reached`
+      });
+
+      steps.forEach((step) => {
+        const item = document.createElement('div');
+        item.className = 'instruction-step';
+        item.innerHTML = `
+          <div class="step-icon">${step.icon}</div>
+          <div>
+            <div class="step-text">${step.text}</div>
+            <div class="step-dist">${step.sub}</div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function zoomMap(delta) {
+      currentScale = Math.min(Math.max(0.3, currentScale + delta), 2.0);
+      applyZoom();
+    }
+
+    function resetZoom() {
+      const viewportWidth = document.getElementById('viewport').clientWidth;
+      currentScale = viewportWidth / 2400;
+      applyZoom();
+    }
+
+    function applyZoom() {
+      document.getElementById('map-wrapper').style.transform = `scale(${currentScale})`;
+    }
+
+    window.onload = async () => {
+      await initGraphData();
+      await switchFloor('ground');
+      resetZoom();
+    };
+    window.onresize = resetZoom;
+  </script>
+</body>
+</html>

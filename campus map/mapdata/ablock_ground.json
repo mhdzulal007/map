@@ -1,0 +1,362 @@
+{
+  "dimensions": {
+    "height": 600,
+    "width": 2400
+  },
+  "edges": [
+    {
+      "from": "A_G_COR_FAR_W",
+      "to": "A_G_COR_W4"
+    },
+    {
+      "from": "A_G_COR_W4",
+      "to": "A_G_COR_W3"
+    },
+    {
+      "from": "A_G_COR_W3",
+      "to": "A_G_COR_W2"
+    },
+    {
+      "from": "A_G_COR_W2",
+      "to": "A_G_COR_W1"
+    },
+    {
+      "from": "A_G_COR_W1",
+      "to": "A_G_COR_MAIN"
+    },
+    {
+      "from": "A_G_COR_MAIN",
+      "to": "A_G_COR_E1"
+    },
+    {
+      "from": "A_G_COR_E1",
+      "to": "A_G_COR_E2"
+    },
+    {
+      "from": "A_G_COR_E2",
+      "to": "A_G_COR_E3"
+    },
+    {
+      "from": "A_G_COR_E3",
+      "to": "A_G_COR_E4"
+    },
+    {
+      "from": "A_G_COR_E4",
+      "to": "A_G_COR_E5"
+    },
+    {
+      "from": "A_G_COR_E5",
+      "to": "A_G_COR_FAR_E"
+    },
+    {
+      "from": "A_G_PORCH",
+      "to": "A_G_COR_MAIN"
+    },
+    {
+      "from": "A_G_COR_MAIN",
+      "to": "A_G_STAIR_MAIN"
+    },
+    {
+      "from": "A_G_COR_MAIN",
+      "to": "A_G_RECEPT"
+    },
+    {
+      "from": "A_G_COR_FAR_W",
+      "to": "A_G_STAIR_WEST"
+    },
+    {
+      "from": "A_G_COR_FAR_E",
+      "to": "A_G_STAIR_EAST"
+    },
+    {
+      "from": "A_G_COR_W4",
+      "to": "A_G_LH_EC2"
+    },
+    {
+      "from": "A_G_COR_W3",
+      "to": "A_G_LH_ME2"
+    },
+    {
+      "from": "A_G_COR_W2",
+      "to": "A_G_LAB_ELEC"
+    },
+    {
+      "from": "A_G_COR_W1",
+      "to": "A_G_INCUBATION"
+    },
+    {
+      "from": "A_G_COR_E1",
+      "to": "A_G_VISITORS"
+    },
+    {
+      "from": "A_G_COR_E2",
+      "to": "A_G_STAFF_107"
+    },
+    {
+      "from": "A_G_COR_E3",
+      "to": "A_G_LAB_LANG"
+    },
+    {
+      "from": "A_G_COR_E4",
+      "to": "A_G_LH_ME1"
+    },
+    {
+      "from": "A_G_COR_E5",
+      "to": "A_G_LH_EC1"
+    },
+    {
+      "from": "A_G_PORCH",
+      "to": "NODE_5"
+    },
+    {
+      "from": "NODE_4",
+      "to": "NODE_5"
+    },
+    {
+      "from": "NODE_3",
+      "to": "NODE_4"
+    }
+  ],
+  "nodes": [
+    {
+      "floor": 0,
+      "id": "A_G_PORCH",
+      "label": "Main Entrance / Porch",
+      "type": "entrance",
+      "x": 1090,
+      "y": 380
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_MAIN",
+      "label": "Main Lobby Walkway",
+      "type": "junction",
+      "x": 1090,
+      "y": 270
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_W1",
+      "label": "West Corridor - Sec 1",
+      "type": "junction",
+      "x": 901,
+      "y": 263
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_W2",
+      "label": "West Corridor - Sec 2",
+      "type": "junction",
+      "x": 660,
+      "y": 270
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_W3",
+      "label": "West Corridor - Sec 3",
+      "type": "junction",
+      "x": 397,
+      "y": 269
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_W4",
+      "label": "West Corridor - Sec 4",
+      "type": "junction",
+      "x": 173,
+      "y": 265
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_FAR_W",
+      "label": "Far West Corridor End",
+      "type": "junction",
+      "x": 110,
+      "y": 270
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_E1",
+      "label": "East Corridor - Sec 1",
+      "type": "junction",
+      "x": 1255,
+      "y": 267
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_E2",
+      "label": "East Corridor - Sec 2",
+      "type": "junction",
+      "x": 1369,
+      "y": 265
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_E3",
+      "label": "East Corridor - Sec 3",
+      "type": "junction",
+      "x": 1535,
+      "y": 265
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_E4",
+      "label": "East Corridor - Sec 4",
+      "type": "junction",
+      "x": 1732,
+      "y": 267
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_E5",
+      "label": "East Corridor - Sec 5",
+      "type": "junction",
+      "x": 1923,
+      "y": 265
+    },
+    {
+      "floor": 0,
+      "id": "A_G_COR_FAR_E",
+      "label": "Far East Corridor End",
+      "type": "junction",
+      "x": 1980,
+      "y": 268
+    },
+    {
+      "floor": 0,
+      "id": "A_G_STAIR_MAIN",
+      "label": "Main Central Staircase",
+      "type": "staircase",
+      "x": 1050,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_STAIR_WEST",
+      "label": "West Staircase",
+      "type": "staircase",
+      "x": 110,
+      "y": 350
+    },
+    {
+      "floor": 0,
+      "id": "A_G_STAIR_EAST",
+      "label": "East Staircase",
+      "type": "staircase",
+      "x": 1980,
+      "y": 350
+    },
+    {
+      "floor": 0,
+      "id": "A_G_LH_EC2",
+      "label": "Lecture Hall (EC-2) A-109",
+      "type": "room",
+      "x": 170,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_LH_ME2",
+      "label": "Lecture Hall (ME-2) A-108",
+      "type": "room",
+      "x": 390,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_LAB_ELEC",
+      "label": "Basic Electronics Lab A-104",
+      "type": "room",
+      "x": 650,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_INCUBATION",
+      "label": "Incubation Centre A-103",
+      "type": "room",
+      "x": 900,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_RECEPT",
+      "label": "Reception",
+      "type": "office",
+      "x": 1150,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_VISITORS",
+      "label": "Visitors Room A-101",
+      "type": "room",
+      "x": 1255,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_STAFF_107",
+      "label": "Staff Room A-107",
+      "type": "room",
+      "x": 1370,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_LAB_LANG",
+      "label": "Language Lab A-106",
+      "type": "room",
+      "x": 1530,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_LH_ME1",
+      "label": "Lecture Hall (ME-1) A-102",
+      "type": "room",
+      "x": 1730,
+      "y": 140
+    },
+    {
+      "floor": 0,
+      "id": "A_G_LH_EC1",
+      "label": "Lecture Hall (EC-1) A-101",
+      "type": "room",
+      "x": 1920,
+      "y": 140
+    },
+    {
+      "id": "NODE_3",
+      "floor": 0,
+      "x": 2217,
+      "y": 294,
+      "type": "junction",
+      "label": "NODE_3"
+    },
+    {
+      "id": "NODE_4",
+      "floor": 0,
+      "x": 2225,
+      "y": 475,
+      "type": "junction",
+      "label": "NODE_4"
+    },
+    {
+      "id": "NODE_5",
+      "floor": 0,
+      "x": 1100,
+      "y": 501,
+      "type": "junction",
+      "label": "NODE_5"
+    },
+    {
+      "id": "NODE_6",
+      "floor": 0,
+      "x": 1093,
+      "y": 380,
+      "type": "junction",
+      "label": "NODE_6"
+    }
+  ]
+}

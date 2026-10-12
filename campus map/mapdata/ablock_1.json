@@ -1,0 +1,340 @@
+{
+  "building": "Administrative Block",
+  "dimensions": {
+    "height": 600,
+    "width": 2400
+  },
+  "edges": [
+    {
+      "from": "A_1_COR_FAR_W",
+      "to": "A_1_COR_W4"
+    },
+    {
+      "from": "A_1_COR_W4",
+      "to": "A_1_COR_W3"
+    },
+    {
+      "from": "A_1_COR_W3",
+      "to": "A_1_COR_W2"
+    },
+    {
+      "from": "A_1_COR_W2",
+      "to": "A_1_COR_W1"
+    },
+    {
+      "from": "A_1_COR_W1",
+      "to": "A_1_COR_MAIN"
+    },
+    {
+      "from": "A_1_COR_MAIN",
+      "to": "A_1_COR_E1"
+    },
+    {
+      "from": "A_1_COR_E1",
+      "to": "A_1_COR_E2"
+    },
+    {
+      "from": "A_1_COR_E2",
+      "to": "A_1_COR_E3"
+    },
+    {
+      "from": "A_1_COR_E3",
+      "to": "A_1_COR_E4"
+    },
+    {
+      "from": "A_1_COR_E4",
+      "to": "A_1_COR_E5"
+    },
+    {
+      "from": "A_1_COR_E5",
+      "to": "A_1_COR_FAR_E"
+    },
+    {
+      "from": "A_1_COR_MAIN",
+      "to": "A_1_STAIR_MAIN"
+    },
+    {
+      "from": "A_1_COR_MAIN",
+      "to": "A_1_BURSAR"
+    },
+    {
+      "from": "A_1_COR_FAR_W",
+      "to": "A_1_STAIR_WEST"
+    },
+    {
+      "from": "A_1_COR_FAR_W",
+      "to": "A_1_GIRLS_SICK"
+    },
+    {
+      "from": "A_1_COR_W4",
+      "to": "A_1_STAFF_A208"
+    },
+    {
+      "from": "A_1_COR_W3",
+      "to": "A_1_DINING_A206"
+    },
+    {
+      "from": "A_1_COR_W2",
+      "to": "A_1_SENATES_HALL"
+    },
+    {
+      "from": "A_1_COR_W1",
+      "to": "A_1_BOARD_ROOM"
+    },
+    {
+      "from": "A_1_COR_E1",
+      "to": "A_1_CONF_A204"
+    },
+    {
+      "from": "A_1_COR_E2",
+      "to": "A_1_PRINCIPAL"
+    },
+    {
+      "from": "A_1_COR_E3",
+      "to": "A_1_OFFICE_A205"
+    },
+    {
+      "from": "A_1_COR_E4",
+      "to": "A_1_EXAM_A207"
+    },
+    {
+      "from": "A_1_COR_E5",
+      "to": "A_1_ASST_BURSAR"
+    },
+    {
+      "from": "A_1_COR_FAR_E",
+      "to": "A_1_PATRON"
+    },
+    {
+      "from": "NODE_1",
+      "to": "NODE_2"
+    }
+  ],
+  "floor": 1,
+  "nodes": [
+    {
+      "floor": 1,
+      "id": "A_1_COR_FAR_W",
+      "label": "West Corridor End (1F)",
+      "type": "junction",
+      "x": 100,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_W4",
+      "label": "West Corridor Sec 4 (1F)",
+      "type": "junction",
+      "x": 255,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_W3",
+      "label": "West Corridor Sec 3 (1F)",
+      "type": "junction",
+      "x": 460,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_W2",
+      "label": "West Corridor Sec 2 (1F)",
+      "type": "junction",
+      "x": 745,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_W1",
+      "label": "West Corridor Sec 1 (1F)",
+      "type": "junction",
+      "x": 1005,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_MAIN",
+      "label": "Main Central Lobby (1F)",
+      "type": "junction",
+      "x": 1145,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_E1",
+      "label": "East Corridor Sec 1 (1F)",
+      "type": "junction",
+      "x": 1275,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_E2",
+      "label": "East Corridor Sec 2 (1F)",
+      "type": "junction",
+      "x": 1455,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_E3",
+      "label": "East Corridor Sec 3 (1F)",
+      "type": "junction",
+      "x": 1705,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_E4",
+      "label": "East Corridor Sec 4 (1F)",
+      "type": "junction",
+      "x": 1935,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_E5",
+      "label": "East Corridor Sec 5 (1F)",
+      "type": "junction",
+      "x": 2085,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_COR_FAR_E",
+      "label": "East Corridor End (1F)",
+      "type": "junction",
+      "x": 2200,
+      "y": 270
+    },
+    {
+      "floor": 1,
+      "id": "A_1_STAIR_MAIN",
+      "label": "Main Central Staircase",
+      "type": "staircase",
+      "x": 1147,
+      "y": 134
+    },
+    {
+      "floor": 1,
+      "id": "A_1_STAIR_WEST",
+      "label": "West Staircase",
+      "type": "staircase",
+      "x": 99,
+      "y": 347
+    },
+    {
+      "floor": 1,
+      "id": "A_1_GIRLS_SICK",
+      "label": "Sick Room (Girls) - 1F",
+      "type": "room",
+      "x": 100,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_STAFF_A208",
+      "label": "Staff Room (A-208)",
+      "type": "room",
+      "x": 255,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_DINING_A206",
+      "label": "Dining Hall (A-206)",
+      "type": "room",
+      "x": 460,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_SENATES_HALL",
+      "label": "Senates Hall",
+      "type": "room",
+      "x": 745,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_BOARD_ROOM",
+      "label": "Board Room",
+      "type": "office",
+      "x": 1005,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_CONF_A204",
+      "label": "Conference & Store (A-204)",
+      "type": "room",
+      "x": 1275,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_PRINCIPAL",
+      "label": "Principal & Waiting (A-203)",
+      "type": "office",
+      "x": 1455,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_OFFICE_A205",
+      "label": "Administrative Office (A-205)",
+      "type": "office",
+      "x": 1705,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_EXAM_A207",
+      "label": "Exam Cell (A-207)",
+      "type": "room",
+      "x": 1935,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_ASST_BURSAR",
+      "label": "Asst Bursar (A-102)",
+      "type": "office",
+      "x": 2087,
+      "y": 200
+    },
+    {
+      "floor": 1,
+      "id": "A_1_PATRON",
+      "label": "Patron Office",
+      "type": "office",
+      "x": 2200,
+      "y": 140
+    },
+    {
+      "floor": 1,
+      "id": "A_1_BURSAR",
+      "label": "Bursar Room",
+      "type": "office",
+      "x": 1145,
+      "y": 351
+    },
+    {
+      "id": "NODE_1",
+      "floor": 1,
+      "x": 1803,
+      "y": 270,
+      "type": "junction",
+      "label": "NODE_1"
+    },
+    {
+      "id": "NODE_2",
+      "floor": 1,
+      "x": 1803,
+      "y": 371,
+      "type": "junction",
+      "label": "NODE_2"
+    }
+  ]
+}

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Visual Map Editor</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+      color: #3c4043;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .controls {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      margin-bottom: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    label { font-size: 13px; font-weight: 600; color: #5f6368; }
+    select, input, button {
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #dadce0;
+      outline: none;
+    }
+    select, input { background-color: #ffffff; }
+    button {
+      background-color: #1a73e8;
+      color: #ffffff;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    button:hover { background-color: #1557b0; }
+
+    /* Tool Buttons */
+    .tool-btn { font-weight: 600; }
+    .tool-btn.active {
+      box-shadow: inset 0 0 0 2px #202124;
+    }
+    #btn-draw-node { background-color: #f2994a; color: #ffffff; }
+    #btn-drag-node { background-color: #e6c419; color: #202124; }
+    #btn-connect-edge { background-color: #9c27b0; color: #ffffff; }
+    .btn-save { background-color: #34a853; font-weight: 600; }
+    .btn-save:hover { background-color: #2d8e47; }
+    .btn-delete {
+      background-color: #ea4335;
+      color: white;
+      padding: 2px 8px;
+      font-size: 11px;
+      border-radius: 3px;
+    }
+
+    .app-layout {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .map-viewport {
+      width: 100%;
+      height: 620px;
+      overflow: auto;
+      background-color: #e8eaed;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    }
+    .map-container {
+      position: relative;
+      width: 2400px;
+      height: 600px;
+      transform-origin: 0 0;
+    }
+    #svg-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 2400px; height: 600px;
+      z-index: 1;
+    }
+    #overlay-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 2400px; height: 600px;
+      z-index: 2;
+    }
+
+    .inspector-panel {
+      width: 380px;
+      min-width: 340px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      padding: 16px;
+      max-height: 620px;
+      overflow-y: auto;
+    }
+    .inspector-panel h3 {
+      margin-top: 0;
+      font-size: 16px;
+      color: #1a73e8;
+      border-bottom: 2px solid #f1f3f4;
+      padding-bottom: 8px;
+    }
+    .drawing-preset-box {
+      background: #f8f9fa;
+      border: 1px solid #dadce0;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+    .drawing-preset-box h4 { margin: 0 0 8px 0; font-size: 13px; color: #202124; }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .node-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border-bottom: 1px solid #f1f3f4;
+      font-size: 12px;
+    }
+    .node-list-item:hover { background-color: #f8f9fa; }
+    .coords-badge {
+      font-family: monospace;
+      background: #e8f0fe;
+      color: #1a73e8;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <h2>Interactive Visual Map & Graph Editor</h2>
+  </div>
+
+  <div class="controls">
+    <div>
+      <label for="json-select">JSON Data:</label>
+      <select id="json-select" onchange="loadSelectedFiles()"></select>
+    </div>
+
+    <div>
+      <label for="svg-select">SVG Map Plan:</label>
+      <select id="svg-select" onchange="renderSvgMap(this.value)"></select>
+    </div>
+
+    <!-- Drawing Mode Toggles -->
+    <button class="tool-btn" id="btn-draw-node" onclick="setMode('draw')">✏️ Click to Add Node</button>
+    <button class="tool-btn" id="btn-drag-node" onclick="setMode('drag')">🖐️ Drag Nodes</button>
+    <button class="tool-btn" id="btn-connect-edge" onclick="setMode('connect')">🔗 Link Nodes</button>
+
+    <button class="btn-save" onclick="saveDataToFile()">Save to File 💾</button>
+
+    <span style="margin-left: auto;">
+      <button onclick="zoomMap(0.1)">Zoom (+)</button>
+      <button onclick="zoomMap(-0.1)">Zoom (-)</button>
+      <button onclick="resetZoom()" style="background-color: #5f6368;">Fit</button>
+    </span>
+  </div>
+
+  <div class="app-layout">
+    <div class="map-viewport" id="viewport">
+      <div class="map-container" id="map-wrapper">
+        <div id="svg-container"></div>
+        <canvas id="overlay-canvas" width="2400" height="600"></canvas>
+      </div>
+    </div>
+
+    <div class="inspector-panel">
+      <!-- Drawing Preset Configuration -->
+      <div class="drawing-preset-box">
+        <h4>Click-to-Add Node Preset</h4>
+        <div class="form-group">
+          <label for="preset-node-type">Node Type:</label>
+          <select id="preset-node-type">
+            <option value="junction">junction (Corridor Point)</option>
+            <option value="room">room</option>
+            <option value="office">office</option>
+            <option value="staircase">staircase</option>
+            <option value="entrance">entrance</option>
+          </select>
+          <label for="preset-id-prefix">ID Prefix:</label>
+          <input type="text" id="preset-id-prefix" value="NODE_" placeholder="e.g. A_1_COR_">
+        </div>
+      </div>
+
+      <h3>Nodes (<span id="node-count">0</span>)</h3>
+      <div id="node-list-container"></div>
+    </div>
+  </div>
+
+  <script>
+    let activeJsonData = null;
+    let currentScale = 1;
+    let currentMode = 'drag'; // 'draw', 'drag', or 'connect'
+    let draggedNode = null;
+    let connectStartNode = null;
+    let mouseHoverPos = { x: 0, y: 0 };
+    let availableFloorsData = [];
+    let autoNodeCounter = 1;
+
+    async function init() {
+      try {
+        const res = await fetch('/api/available-floors');
+        const data = await res.json();
+        availableFloorsData = data;
+
+        const jsonSelect = document.getElementById('json-select');
+        const svgSelect = document.getElementById('svg-select');
+
+        jsonSelect.innerHTML = '';
+        svgSelect.innerHTML = '';
+
+        data.all_json_files.forEach(file => {
+          jsonSelect.add(new Option(file, file));
+        });
+
+        data.all_svg_files.forEach(file => {
+          svgSelect.add(new Option(file, file));
+        });
+
+        if (data.all_json_files.length > 0) {
+          loadSelectedFiles();
+        }
+
+        setMode('drag');
+      } catch (err) {
+        console.error("Error discovering floor files:", err);
+      }
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-${mode === 'draw' ? 'draw-node' : (mode === 'connect' ? 'connect-edge' : 'drag-node')}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const canvas = document.getElementById('overlay-canvas');
+      canvas.style.cursor = mode === 'draw' ? 'crosshair' : (mode === 'connect' ? 'pointer' : 'grab');
+
+      connectStartNode = null;
+      drawOverlay();
+    }
+
+    async function loadSelectedFiles() {
+      const selectedJsonFile = document.getElementById('json-select').value;
+      if (!selectedJsonFile) return;
+
+      const pairedFloor = availableFloorsData.floors.find(f => f.json_file === selectedJsonFile);
+      if (pairedFloor && pairedFloor.svg_file) {
+        document.getElementById('svg-select').value = pairedFloor.svg_file;
+      }
+
+      const svgFile = document.getElementById('svg-select').value;
+
+      try {
+        const jsonRes = await fetch(`/api/mapdata/${selectedJsonFile}`);
+        activeJsonData = await jsonRes.json();
+
+        await renderSvgMap(svgFile);
+
+        drawOverlay();
+        renderNodeInspectorList();
+      } catch (err) {
+        console.error("Error loading selected files:", err);
+      }
+    }
+
+    async function renderSvgMap(svgFile) {
+      if (!svgFile) return;
+      try {
+        const response = await fetch(`/static/${svgFile}`);
+        if (!response.ok) throw new Error(`Could not load /static/${svgFile}`);
+        const svgContent = await response.text();
+        document.getElementById('svg-container').innerHTML = svgContent;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function drawOverlay() {
+      const canvas = document.getElementById('overlay-canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (!activeJsonData || !activeJsonData.nodes) return;
+
+      const nodes = activeJsonData.nodes;
+      const edges = activeJsonData.edges || [];
+
+      // Draw Graph Edges
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#9aa0a6';
+      edges.forEach(edge => {
+        const n1 = nodes.find(n => n.id === edge.from);
+        const n2 = nodes.find(n => n.id === edge.to);
+        if (n1 && n2) {
+          ctx.beginPath();
+          ctx.moveTo(n1.x, n1.y);
+          ctx.lineTo(n2.x, n2.y);
+          ctx.stroke();
+        }
+      });
+
+      // Active Connection Preview Line
+      if (currentMode === 'connect' && connectStartNode) {
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#9c27b0';
+        ctx.setLineDash([6, 6]);
+        ctx.beginPath();
+        ctx.moveTo(connectStartNode.x, connectStartNode.y);
+        ctx.lineTo(mouseHoverPos.x, mouseHoverPos.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Draw Nodes
+      nodes.forEach(node => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 8, 0, Math.PI * 2);
+
+        if (connectStartNode && connectStartNode.id === node.id) {
+          ctx.fillStyle = '#9c27b0'; // Purple highlight for connection source
+        } else {
+          ctx.fillStyle = node.type === 'junction' ? '#5f6368' : '#1a73e8';
+        }
+
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#202124';
+        ctx.font = '10px Arial';
+        ctx.fillText(node.id, node.x + 10, node.y + 3);
+      });
+    }
+
+    // Interactive Canvas Click & Mouse Handling
+    const canvas = document.getElementById('overlay-canvas');
+
+    canvas.addEventListener('mousedown', (e) => {
+      if (!activeJsonData) return;
+      const rect = canvas.getBoundingClientRect();
+      const clickX = Math.round((e.clientX - rect.left) / currentScale);
+      const clickY = Math.round((e.clientY - rect.top) / currentScale);
+
+      const nodes = activeJsonData.nodes || [];
+      const clickedNode = nodes.find(n => Math.hypot(n.x - clickX, n.y - clickY) < 15);
+
+      // Mode 1: Point-and-Click Add Node
+      if (currentMode === 'draw') {
+        const prefix = document.getElementById('preset-id-prefix').value.trim() || 'NODE_';
+        const type = document.getElementById('preset-node-type').value;
+
+        let newId = `${prefix}${autoNodeCounter}`;
+        while (nodes.some(n => n.id === newId)) {
+          autoNodeCounter++;
+          newId = `${prefix}${autoNodeCounter}`;
+        }
+
+        const floorNum = activeJsonData.floor !== undefined ? activeJsonData.floor : 0;
+        const newNode = {
+          id: newId,
+          floor: floorNum,
+          x: clickX,
+          y: clickY,
+          type: type,
+          label: newId
+        };
+
+        activeJsonData.nodes.push(newNode);
+        autoNodeCounter++;
+
+        drawOverlay();
+        renderNodeInspectorList();
+      }
+
+      // Mode 2: Drag Existing Node
+      else if (currentMode === 'drag') {
+        draggedNode = clickedNode;
+      }
+
+      // Mode 3: Link Nodes with Edges
+      else if (currentMode === 'connect') {
+        if (!connectStartNode) {
+          if (clickedNode) connectStartNode = clickedNode;
+        } else {
+          if (clickedNode && clickedNode.id !== connectStartNode.id) {
+            if (!activeJsonData.edges) activeJsonData.edges = [];
+            
+            // Avoid duplicate edges
+            const exists = activeJsonData.edges.some(edge => 
+              (edge.from === connectStartNode.id && edge.to === clickedNode.id) ||
+              (edge.from === clickedNode.id && edge.to === connectStartNode.id)
+            );
+
+            if (!exists) {
+              activeJsonData.edges.push({ from: connectStartNode.id, to: clickedNode.id });
+            }
+          }
+          connectStartNode = null;
+        }
+        drawOverlay();
+      }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseHoverPos.x = Math.round((e.clientX - rect.left) / currentScale);
+      mouseHoverPos.y = Math.round((e.clientY - rect.top) / currentScale);
+
+      if (draggedNode && currentMode === 'drag') {
+        draggedNode.x = mouseHoverPos.x;
+        draggedNode.y = mouseHoverPos.y;
+        drawOverlay();
+        renderNodeInspectorList();
+      } else if (currentMode === 'connect' && connectStartNode) {
+        drawOverlay();
+      }
+    });
+
+    window.addEventListener('mouseup', () => { draggedNode = null; });
+
+    function deleteNode(nodeId) {
+      if (!activeJsonData || !confirm(`Delete node "${nodeId}"?`)) return;
+
+      activeJsonData.nodes = activeJsonData.nodes.filter(n => n.id !== nodeId);
+      if (activeJsonData.edges) {
+        activeJsonData.edges = activeJsonData.edges.filter(e => e.from !== nodeId && e.to !== nodeId);
+      }
+
+      drawOverlay();
+      renderNodeInspectorList();
+    }
+
+    function renderNodeInspectorList() {
+      const container = document.getElementById('node-list-container');
+      const nodes = activeJsonData ? (activeJsonData.nodes || []) : [];
+
+      document.getElementById('node-count').innerText = nodes.length;
+      container.innerHTML = '';
+
+      nodes.forEach(node => {
+        const item = document.createElement('div');
+        item.className = 'node-list-item';
+        item.innerHTML = `
+          <div>
+            <strong>${node.id}</strong> <br>
+            <span style="color: #5f6368; font-size: 11px;">${node.label} (${node.type})</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span class="coords-badge">X:${node.x}, Y:${node.y}</span>
+            <button class="btn-delete" onclick="deleteNode('${node.id}')">Delete</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    async function saveDataToFile() {
+      const selectedJsonFile = document.getElementById('json-select').value;
+      if (!selectedJsonFile || !activeJsonData) return;
+
+      try {
+        const res = await fetch(`/api/save-mapdata/${selectedJsonFile}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(activeJsonData, null, 2)
+        });
+
+        const result = await res.json();
+        if (result.success) {
+          alert(`Saved changes to ${selectedJsonFile}!`);
+        } else {
+          alert(`Error saving file: ${result.error}`);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Failed to save data.");
+      }
+    }
+
+    function zoomMap(delta) {
+      currentScale = Math.min(Math.max(0.3, currentScale + delta), 2.0);
+      document.getElementById('map-wrapper').style.transform = `scale(${currentScale})`;
+    }
+
+    function resetZoom() {
+      const viewportWidth = document.getElementById('viewport').clientWidth;
+      currentScale = viewportWidth / 2400;
+      document.getElementById('map-wrapper').style.transform = `scale(${currentScale})`;
+    }
+
+    window.onload = async () => {
+      await init();
+      resetZoom();
+    };
+    window.onresize = resetZoom;
+  </script>
+</body>
+</html>

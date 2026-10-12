@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 600" width="2400" height="600" style="background-color: #e8eaed; font-family: Roboto, Arial, sans-serif;">
+
+  <defs>
+    <!-- Subtle drop shadow for building blocks -->
+    <filter id="block-shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <style>
+    /* Google Maps Indoor Color Palette */
+    .building-footprint { fill: #ffffff; stroke: #b0b7c0; stroke-width: 2; filter: url(#block-shadow); }
+    .room-fill { fill: #fef3e2; stroke: #d9a05b; stroke-width: 1.5; }
+    .corridor-fill { fill: #ffffff; }
+    .stair-fill { fill: #f1f3f4; stroke: #bdc1c6; stroke-width: 1.5; }
+    .office-fill { fill: #fce8e6; stroke: #ea4335; stroke-width: 1.5; }
+    .entrance-fill { fill: #e6f4ea; stroke: #34a853; stroke-width: 1.5; }
+
+    /* Map Typography */
+    .map-text { font-size: 13px; font-weight: 500; fill: #3c4043; }
+    .sub-text { font-size: 11px; font-weight: 400; fill: #70757a; }
+    .bold-text { font-size: 14px; font-weight: 700; fill: #202124; }
+
+    /* Google Badge Pins */
+    .pin-bg { fill: #1a73e8; }
+    .pin-bg-purple { fill: #a142f4; }
+    .pin-bg-green { fill: #34a853; }
+    .pin-bg-orange { fill: #e37400; }
+    .pin-icon { fill: #ffffff; }
+  </style>
+
+  <!-- Outside Grounds Background -->
+  <rect x="0" y="0" width="2400" height="600" fill="#e8eaed"/>
+
+  <!-- Main Building Footprint Boundary -->
+  <rect x="30" y="40" width="2020" height="360" class="building-footprint" rx="4"/>
+  <rect x="2100" y="180" width="260" height="220" class="building-footprint" rx="4"/>
+
+  <!-- Main Verandah / Walkway Path -->
+  <rect x="40" y="230" width="2000" height="80" class="corridor-fill"/>
+
+  <!-- WEST WING ROOMS -->
+  <!-- A-109 EC-2 -->
+  <g>
+    <rect x="60" y="60" width="220" height="160" class="room-fill"/>
+    <circle cx="170" cy="110" r="12" class="pin-bg"/>
+    <path d="M165 110 L175 110 M170 105 L170 115" stroke="#fff" stroke-width="2"/>
+    <text x="170" y="140" class="map-text" text-anchor="middle">Lecture Hall (EC-2)</text>
+    <text x="170" y="156" class="sub-text" text-anchor="middle">A-109</text>
+  </g>
+
+  <!-- A-108 ME-2 -->
+  <g>
+    <rect x="290" y="60" width="200" height="160" class="room-fill"/>
+    <circle cx="390" cy="110" r="12" class="pin-bg"/>
+    <text x="390" y="140" class="map-text" text-anchor="middle">Lecture Hall (ME-2)</text>
+    <text x="390" y="156" class="sub-text" text-anchor="middle">A-108</text>
+  </g>
+
+  <!-- Basic Electronics Lab A-104 -->
+  <g>
+    <rect x="500" y="60" width="300" height="160" class="room-fill"/>
+    <circle cx="650" cy="110" r="12" class="pin-bg"/>
+    <text x="650" y="140" class="map-text" text-anchor="middle">Basic Electronics Lab</text>
+    <text x="650" y="156" class="sub-text" text-anchor="middle">A-104</text>
+  </g>
+
+  <!-- Incubation Centre A-103 -->
+  <g>
+    <rect x="810" y="60" width="180" height="160" class="room-fill"/>
+    <circle cx="900" cy="110" r="12" class="pin-bg-orange"/>
+    <text x="900" y="140" class="map-text" text-anchor="middle">Incubation Centre</text>
+    <text x="900" y="156" class="sub-text" text-anchor="middle">A-103</text>
+  </g>
+
+  <!-- CORE / LOBBY AREA -->
+  <!-- Main Staircase -->
+  <g>
+    <rect x="1000" y="60" width="100" height="160" class="stair-fill"/>
+    <circle cx="1050" cy="110" r="12" class="pin-bg-purple"/>
+    <text x="1050" y="140" class="map-text" text-anchor="middle">Central Stairs</text>
+  </g>
+
+  <!-- Reception -->
+  <g>
+    <rect x="1110" y="60" width="80" height="160" class="office-fill"/>
+    <circle cx="1150" cy="110" r="12" fill="#ea4335"/>
+    <text x="1150" y="140" class="bold-text" fill="#d93025" text-anchor="middle">Reception</text>
+  </g>
+
+  <!-- EAST WING ROOMS -->
+  <!-- Visitors Room -->
+  <g>
+    <rect x="1200" y="60" width="110" height="160" class="room-fill"/>
+    <text x="1255" y="130" class="map-text" text-anchor="middle">Visitors Room</text>
+    <text x="1255" y="146" class="sub-text" text-anchor="middle">A-101</text>
+  </g>
+
+  <!-- Staff Room -->
+  <g>
+    <rect x="1320" y="60" width="100" height="160" class="room-fill"/>
+    <text x="1370" y="130" class="map-text" text-anchor="middle">Staff Room</text>
+    <text x="1370" y="146" class="sub-text" text-anchor="middle">A-107</text>
+  </g>
+
+  <!-- Language Lab -->
+  <g>
+    <rect x="1430" y="60" width="200" height="160" class="room-fill"/>
+    <circle cx="1530" cy="110" r="12" class="pin-bg"/>
+    <text x="1530" y="140" class="map-text" text-anchor="middle">Language Lab</text>
+    <text x="1530" y="156" class="sub-text" text-anchor="middle">A-106</text>
+  </g>
+
+  <!-- ME-1 -->
+  <g>
+    <rect x="1640" y="60" width="180" height="160" class="room-fill"/>
+    <circle cx="1730" cy="110" r="12" class="pin-bg"/>
+    <text x="1730" y="140" class="map-text" text-anchor="middle">Lecture Hall (ME-1)</text>
+    <text x="1730" y="156" class="sub-text" text-anchor="middle">A-102</text>
+  </g>
+
+  <!-- EC-1 -->
+  <g>
+    <rect x="1830" y="60" width="180" height="160" class="room-fill"/>
+    <circle cx="1920" cy="110" r="12" class="pin-bg"/>
+    <text x="1920" y="140" class="map-text" text-anchor="middle">Lecture Hall (EC-1)</text>
+    <text x="1920" y="156" class="sub-text" text-anchor="middle">A-101</text>
+  </g>
+
+  <!-- SIDE STAIRCASES -->
+  <g>
+    <rect x="60" y="320" width="100" height="60" class="stair-fill"/>
+    <text x="110" y="355" class="map-text" text-anchor="middle">West Stairs</text>
+  </g>
+
+  <g>
+    <rect x="1930" y="320" width="100" height="60" class="stair-fill"/>
+    <text x="1980" y="355" class="map-text" text-anchor="middle">East Stairs</text>
+  </g>
+
+  <!-- MAIN ENTRANCE PORCH -->
+  <g>
+    <rect x="1000" y="320" width="180" height="100" class="entrance-fill"/>
+    <circle cx="1090" cy="355" r="12" class="pin-bg-green"/>
+    <text x="1090" y="385" class="bold-text" fill="#1e8e3e" text-anchor="middle">MAIN ENTRANCE</text>
+    <text x="1090" y="401" class="sub-text" text-anchor="middle">Porch / Gate</text>
+  </g>
+
+  <!-- FAR RIGHT ADMINISTRATIVE BLOCK -->
+  <g>
+    <rect x="2120" y="200" width="220" height="180" class="office-fill"/>
+    <text x="2230" y="280" class="bold-text" fill="#d93025" text-anchor="middle">Office A-105AD</text>
+    <text x="2230" y="298" class="sub-text" text-anchor="middle">Administrative Block</text>
+  </g>
+
+  <!-- Google Map UI Overlays (Floor Selector Widget) -->
+  <g transform="translate(2300, 420)">
+    <rect x="0" y="0" width="40" height="110" fill="#ffffff" rx="8" stroke="#dadce0" stroke-width="1" filter="url(#block-shadow)"/>
+    <text x="20" y="30" font-size="14" font-weight="500" fill="#70757a" text-anchor="middle">2</text>
+    <text x="20" y="60" font-size="14" font-weight="500" fill="#70757a" text-anchor="middle">1</text>
+    <rect x="4" y="75" width="32" height="28" fill="#e8f0fe" rx="4"/>
+    <text x="20" y="94" font-size="14" font-weight="700" fill="#1a73e8" text-anchor="middle">G</text>
+  </g>
+
+</svg>

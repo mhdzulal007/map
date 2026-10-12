@@ -1,0 +1,364 @@
+{
+  "building": "Administrative Block",
+  "dimensions": {
+    "height": 600,
+    "width": 2400
+  },
+  "edges": [
+    {
+      "from": "A_2_COR_FAR_W",
+      "to": "A_2_COR_W5"
+    },
+    {
+      "from": "A_2_COR_W5",
+      "to": "A_2_COR_W4"
+    },
+    {
+      "from": "A_2_COR_W4",
+      "to": "A_2_COR_W3"
+    },
+    {
+      "from": "A_2_COR_W3",
+      "to": "A_2_COR_W2"
+    },
+    {
+      "from": "A_2_COR_W2",
+      "to": "A_2_COR_W1"
+    },
+    {
+      "from": "A_2_COR_W1",
+      "to": "A_2_COR_MAIN"
+    },
+    {
+      "from": "A_2_COR_MAIN",
+      "to": "A_2_COR_E1"
+    },
+    {
+      "from": "A_2_COR_E1",
+      "to": "A_2_COR_E2"
+    },
+    {
+      "from": "A_2_COR_E2",
+      "to": "A_2_COR_E3"
+    },
+    {
+      "from": "A_2_COR_E3",
+      "to": "A_2_COR_E4"
+    },
+    {
+      "from": "A_2_COR_E4",
+      "to": "A_2_COR_E5"
+    },
+    {
+      "from": "A_2_COR_E5",
+      "to": "A_2_COR_FAR_E"
+    },
+    {
+      "from": "A_2_COR_MAIN",
+      "to": "A_2_STAIR_MAIN"
+    },
+    {
+      "from": "A_2_COR_MAIN",
+      "to": "A_2_VICE_PRINCIPAL"
+    },
+    {
+      "from": "A_2_COR_FAR_W",
+      "to": "A_2_STAIR_WEST"
+    },
+    {
+      "from": "A_2_COR_FAR_W",
+      "to": "A_2_TOILET_W"
+    },
+    {
+      "from": "A_2_COR_W5",
+      "to": "A_2_LH_A308"
+    },
+    {
+      "from": "A_2_COR_W4",
+      "to": "A_2_LH_A306"
+    },
+    {
+      "from": "A_2_COR_W3",
+      "to": "A_2_LH_A304"
+    },
+    {
+      "from": "A_2_COR_W2",
+      "to": "A_2_LH_A304A"
+    },
+    {
+      "from": "A_2_COR_W1",
+      "to": "A_2_HOD_A302"
+    },
+    {
+      "from": "A_2_COR_E1",
+      "to": "A_2_STAFF_A301"
+    },
+    {
+      "from": "A_2_COR_E2",
+      "to": "A_2_LAB_CHEM"
+    },
+    {
+      "from": "A_2_COR_E3",
+      "to": "A_2_LAB_PHYS"
+    },
+    {
+      "from": "A_2_COR_E4",
+      "to": "A_2_LH_A305"
+    },
+    {
+      "from": "A_2_COR_E5",
+      "to": "A_2_LH_A307"
+    },
+    {
+      "from": "A_2_COR_FAR_E",
+      "to": "A_2_TOILET_E"
+    },
+    {
+      "from": "NODE_1",
+      "to": "NODE_2"
+    }
+  ],
+  "floor": 2,
+  "nodes": [
+    {
+      "floor": 2,
+      "id": "A_2_COR_FAR_W",
+      "label": "West Corridor End (2F)",
+      "type": "junction",
+      "x": 90,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_W5",
+      "label": "West Corridor Sec 5 (2F)",
+      "type": "junction",
+      "x": 245,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_W4",
+      "label": "West Corridor Sec 4 (2F)",
+      "type": "junction",
+      "x": 470,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_W3",
+      "label": "West Corridor Sec 3 (2F)",
+      "type": "junction",
+      "x": 695,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_W2",
+      "label": "West Corridor Sec 2 (2F)",
+      "type": "junction",
+      "x": 920,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_W1",
+      "label": "West Corridor Sec 1 (2F)",
+      "type": "junction",
+      "x": 1085,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_MAIN",
+      "label": "Main Central Lobby (2F)",
+      "type": "junction",
+      "x": 1205,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_E1",
+      "label": "East Corridor Sec 1 (2F)",
+      "type": "junction",
+      "x": 1325,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_E2",
+      "label": "East Corridor Sec 2 (2F)",
+      "type": "junction",
+      "x": 1490,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_E3",
+      "label": "East Corridor Sec 3 (2F)",
+      "type": "junction",
+      "x": 1695,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_E4",
+      "label": "East Corridor Sec 4 (2F)",
+      "type": "junction",
+      "x": 1890,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_E5",
+      "label": "East Corridor Sec 5 (2F)",
+      "type": "junction",
+      "x": 2085,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_COR_FAR_E",
+      "label": "East Corridor End (2F)",
+      "type": "junction",
+      "x": 2225,
+      "y": 270
+    },
+    {
+      "floor": 2,
+      "id": "A_2_STAIR_MAIN",
+      "label": "Main Central Staircase (2F)",
+      "type": "staircase",
+      "x": 1205,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_STAIR_WEST",
+      "label": "West Staircase (2F)",
+      "type": "staircase",
+      "x": 95,
+      "y": 350
+    },
+    {
+      "floor": 2,
+      "id": "A_2_TOILET_W",
+      "label": "Toilet A-310",
+      "type": "room",
+      "x": 90,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_LH_A308",
+      "label": "Lecture Hall A-308 (EE-2)",
+      "type": "room",
+      "x": 245,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_LH_A306",
+      "label": "Lecture Hall A-306 (EE-2)",
+      "type": "room",
+      "x": 470,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_LH_A304",
+      "label": "Lecture Hall A-304 (CE-2)",
+      "type": "room",
+      "x": 695,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_LH_A304A",
+      "label": "Lecture Hall A-304(A) (EE-1)",
+      "type": "room",
+      "x": 920,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_HOD_A302",
+      "label": "HOD Office A-302",
+      "type": "office",
+      "x": 1085,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_STAFF_A301",
+      "label": "Staff Room A-301",
+      "type": "office",
+      "x": 1325,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_LAB_CHEM",
+      "label": "Chemistry Lab A-303",
+      "type": "room",
+      "x": 1490,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_LAB_PHYS",
+      "label": "Physics Lab",
+      "type": "room",
+      "x": 1695,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_LH_A305",
+      "label": "Lecture Hall A-305 (CS-1)",
+      "type": "room",
+      "x": 1890,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_LH_A307",
+      "label": "Lecture Hall A-307 (CE-1)",
+      "type": "room",
+      "x": 2085,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_TOILET_E",
+      "label": "Toilet A-309",
+      "type": "room",
+      "x": 2225,
+      "y": 140
+    },
+    {
+      "floor": 2,
+      "id": "A_2_VICE_PRINCIPAL",
+      "label": "Vice Principal Office",
+      "type": "office",
+      "x": 1205,
+      "y": 360
+    },
+    {
+      "id": "NODE_1",
+      "floor": 2,
+      "x": 2016,
+      "y": 270,
+      "type": "junction",
+      "label": "NODE_1"
+    },
+    {
+      "id": "NODE_2",
+      "floor": 2,
+      "x": 2020,
+      "y": 360,
+      "type": "junction",
+      "label": "NODE_2"
+    }
+  ]
+}

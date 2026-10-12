@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 600" width="2400" height="600" style="background-color: #e8eaed; font-family: Roboto, Arial, sans-serif;">
+  <defs>
+    <filter id="block-shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <style>
+    .building-footprint { fill: #ffffff; stroke: #80868b; stroke-width: 2; filter: url(#block-shadow); }
+    .room-fill { fill: #f8f9fa; stroke: #bdc1c6; stroke-width: 1.5; }
+    .corridor-fill { fill: #ffffff; stroke: #dadce0; stroke-width: 1; }
+    .stair-fill { fill: #f1f3f4; stroke: #9aa0a6; stroke-width: 1.5; }
+    .office-fill { fill: #e8f0fe; stroke: #1a73e8; stroke-width: 1.5; }
+    .toilet-fill { fill: #feefc3; stroke: #f9ab00; stroke-width: 1.5; }
+    .bridge-fill { fill: #e6f4ea; stroke: #34a853; stroke-width: 1.5; stroke-dasharray: 4,4; }
+
+    .map-title { font-size: 13px; font-weight: 700; fill: #202124; }
+    .map-sub { font-size: 11px; font-weight: 400; fill: #5f6368; }
+    .room-num { font-size: 12px; font-weight: 700; fill: #1a73e8; }
+    .dim-text { font-size: 10px; font-weight: 400; fill: #70757a; }
+
+    .pin-blue { fill: #1a73e8; }
+    .pin-red { fill: #ea4335; }
+    .pin-green { fill: #34a853; }
+    .pin-orange { fill: #f2994a; }
+  </style>
+
+  <rect x="0" y="0" width="2400" height="600" fill="#e8eaed"/>
+
+  <!-- Building Footprint / Outer Frame -->
+  <rect x="30" y="40" width="2240" height="380" class="building-footprint" rx="4"/>
+
+  <!-- Main Verandah / Corridor (Running through the length) -->
+  <rect x="50" y="230" width="2200" height="70" class="corridor-fill"/>
+  <text x="700" y="270" class="dim-text" text-anchor="middle">VERANDAH</text>
+  <text x="1600" y="270" class="dim-text" text-anchor="middle">VERANDAH</text>
+
+  <!-- 1. Sick Room (Girls) Far West -->
+  <g>
+    <rect x="50" y="50" width="100" height="175" class="room-fill"/>
+    <circle cx="100" cy="100" r="6" class="pin-blue"/>
+    <text x="100" y="125" class="map-title" text-anchor="middle">SICK ROOM (GIRLS)</text>
+    <text x="100" y="142" class="map-sub" text-anchor="middle">Area-13.21 m²</text>
+  </g>
+
+  <!-- West Staircase & Passage -->
+  <g>
+    <rect x="50" y="320" width="90" height="90" class="stair-fill"/>
+    <text x="95" y="360" class="map-title" text-anchor="middle">STAIRS / UP</text>
+    <text x="95" y="375" class="dim-text" text-anchor="middle">TO B-BLOCK ↓</text>
+  </g>
+
+  <!-- 2. Staff Room (A-208) -->
+  <g>
+    <rect x="155" y="50" width="200" height="175" class="room-fill"/>
+    <circle cx="255" cy="100" r="6" class="pin-blue"/>
+    <text x="255" y="125" class="map-title" text-anchor="middle">STAFF ROOM</text>
+    <text x="255" y="142" class="room-num" text-anchor="middle">A-208</text>
+    <text x="255" y="157" class="map-sub" text-anchor="middle">Area-76.9 m²</text>
+  </g>
+
+  <!-- 3. Dining Hall (A-206) -->
+  <g>
+    <rect x="360" y="50" width="200" height="175" class="room-fill"/>
+    <circle cx="460" cy="100" r="6" class="pin-blue"/>
+    <text x="460" y="125" class="map-title" text-anchor="middle">DINING HALL</text>
+    <text x="460" y="142" class="room-num" text-anchor="middle">A-206</text>
+    <text x="460" y="157" class="map-sub" text-anchor="middle">Area-76.9 m²</text>
+  </g>
+
+  <!-- 4. Senates Hall -->
+  <g>
+    <rect x="565" y="50" width="360" height="175" class="room-fill"/>
+    <circle cx="745" cy="100" r="6" class="pin-blue"/>
+    <text x="745" y="125" class="map-title" text-anchor="middle">SENATES HALL</text>
+    <text x="745" y="142" class="map-sub" text-anchor="middle">Area-155.84 m²</text>
+  </g>
+
+  <!-- Pedestrian Bridge Left -->
+  <rect x="930" y="10" width="80" height="35" class="bridge-fill"/>
+  <text x="970" y="32" class="dim-text" text-anchor="middle">BRIDGE</text>
+
+  <!-- 5. Board Room -->
+  <g>
+    <rect x="930" y="50" width="150" height="175" class="office-fill"/>
+    <circle cx="1005" cy="100" r="6" class="pin-red"/>
+    <text x="1005" y="125" class="map-title" text-anchor="middle">BOARD ROOM</text>
+    <text x="1005" y="142" class="map-sub" text-anchor="middle">Area-50.6 m²</text>
+  </g>
+
+  <!-- Central Lobby & Main Stairs (UP/DN) -->
+  <g>
+    <rect x="1085" y="50" width="120" height="175" class="stair-fill"/>
+    <circle cx="1145" cy="100" r="6" class="pin-orange"/>
+    <text x="1145" y="125" class="map-title" text-anchor="middle">LOBBY / STAIRS</text>
+    <text x="1145" y="142" class="dim-text" text-anchor="middle">UP / DN</text>
+    <text x="1145" y="157" class="map-sub" text-anchor="middle">Area-50.6 m²</text>
+  </g>
+
+  <!-- Pedestrian Bridge Right -->
+  <rect x="1210" y="10" width="80" height="35" class="bridge-fill"/>
+  <text x="1250" y="32" class="dim-text" text-anchor="middle">BRIDGE</text>
+
+  <!-- 6. Conference Room & Store -->
+  <g>
+    <rect x="1210" y="50" width="130" height="175" class="room-fill"/>
+    <circle cx="1275" cy="100" r="6" class="pin-blue"/>
+    <text x="1275" y="120" class="map-title" text-anchor="middle">CONFERENCE</text>
+    <text x="1275" y="135" class="room-num" text-anchor="middle">A-204</text>
+    <text x="1275" y="150" class="map-sub" text-anchor="middle">STORE / A-7.99m²</text>
+  </g>
+
+  <!-- 7. Principal Office & Waiting/CA -->
+  <g>
+    <rect x="1345" y="50" width="220" height="175" class="office-fill"/>
+    <circle cx="1455" cy="90" r="6" class="pin-red"/>
+    <text x="1455" y="112" class="map-title" text-anchor="middle">PRINCIPAL</text>
+    <text x="1455" y="127" class="map-sub" text-anchor="middle">Area-49.59 m²</text>
+    <text x="1455" y="147" class="map-title" text-anchor="middle">WAITING / C.A.</text>
+    <text x="1455" y="162" class="room-num" text-anchor="middle">A-203</text>
+  </g>
+
+  <!-- 8. Main Office (A-205) -->
+  <g>
+    <rect x="1570" y="50" width="270" height="175" class="office-fill"/>
+    <circle cx="1705" cy="100" r="6" class="pin-red"/>
+    <text x="1705" y="125" class="map-title" text-anchor="middle">OFFICE</text>
+    <text x="1705" y="142" class="room-num" text-anchor="middle">A-205</text>
+    <text x="1705" y="157" class="map-sub" text-anchor="middle">Area-129.53 m²</text>
+  </g>
+
+  <!-- 9. Exam Cell (A-207) -->
+  <g>
+    <rect x="1845" y="50" width="180" height="175" class="room-fill"/>
+    <circle cx="1935" cy="100" r="6" class="pin-blue"/>
+    <text x="1935" y="125" class="map-title" text-anchor="middle">EXAM CELL</text>
+    <text x="1935" y="142" class="room-num" text-anchor="middle">A-207</text>
+    <text x="1935" y="157" class="map-sub" text-anchor="middle">Area-78.9 m²</text>
+  </g>
+
+  <!-- 10. Toilet & Asst Bursar (East Wing) -->
+  <g>
+    <rect x="2030" y="50" width="110" height="85" class="toilet-fill"/>
+    <text x="2085" y="90" class="dim-text" text-anchor="middle">TOILET A-209</text>
+    
+    <rect x="2030" y="140" width="110" height="85" class="office-fill"/>
+    <text x="2085" y="175" class="map-title" text-anchor="middle">ASST BURSAR</text>
+    <text x="2085" y="190" class="room-num" text-anchor="middle">A-102</text>
+  </g>
+
+  <!-- 11. Patron Office (Far East Block) -->
+  <g>
+    <rect x="2145" y="50" width="110" height="175" class="office-fill"/>
+    <circle cx="2200" cy="100" r="6" class="pin-red"/>
+    <text x="2200" y="125" class="map-title" text-anchor="middle">PATRON</text>
+    <text x="2200" y="142" class="map-sub" text-anchor="middle">Area-43.55 m²</text>
+  </g>
+
+  <!-- Lower Extensions (Bursar & Passage) -->
+  <g>
+    <rect x="1085" y="310" width="120" height="90" class="office-fill"/>
+    <text x="1145" y="345" class="map-title" text-anchor="middle">BURSAR / ROOM</text>
+    <text x="1145" y="365" class="toilet-fill" width="40" height="20">TOILET</text>
+  </g>
+
+  <g>
+    <rect x="1750" y="320" width="90" height="90" class="stair-fill"/>
+    <text x="1795" y="360" class="map-title" text-anchor="middle">STAIRS</text>
+    <text x="1795" y="375" class="dim-text" text-anchor="middle">TO B-BLOCK ↓</text>
+  </g>
+
+  <!-- Interactive SVG Floor Controller Widget -->
+  <g transform="translate(2300, 420)">
+    <rect x="0" y="0" width="40" height="110" fill="#ffffff" rx="8" stroke="#dadce0" stroke-width="1" filter="url(#block-shadow)"/>
+    <text x="20" y="30" font-size="14" font-weight="500" fill="#70757a" text-anchor="middle" class="floor-btn" data-floor="2" style="cursor:pointer;">2</text>
+    
+    <!-- Active Highlight for 1st Floor -->
+    <rect x="4" y="42" width="32" height="28" fill="#e8f0fe" rx="4"/>
+    <text x="20" y="61" font-size="14" font-weight="700" fill="#1a73e8" text-anchor="middle" class="floor-btn" data-floor="1" style="cursor:pointer;">1</text>
+    
+    <text x="20" y="94" font-size="14" font-weight="500" fill="#70757a" text-anchor="middle" class="floor-btn" data-floor="0" style="cursor:pointer;">G</text>
+  </g>
+</svg>
